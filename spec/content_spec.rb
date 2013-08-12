@@ -2,10 +2,17 @@ require 'spec_helper'
 
 describe Content do
 	it "should initialize content items" do
-		data = ["0FAE93A1943E4437AD662A81976811DB"],
-	  		   ["1EEE501364B843F3B6518597A7999D12",]
+		data = [["0FAE93A1943E4437AD662A81976811DB"],
+	  		   ["1EEE501364B843F3B6518597A7999D12"]]
 	  	content = Content.new data
 	  	content.items.size.should == 2
+	end
+
+	it "should find item for given name" do
+		data = [["0FAE93A1943E4437AD662A81976811DB", "type", "some-name"],
+	  		   ["1EEE501364B843F3B6518597A7999D12", "type", "another-name"]]
+	  	content = Content.new data
+	  	content.find("another-name").uuid.should == "1EEE501364B843F3B6518597A7999D12"
 	end
 end
 

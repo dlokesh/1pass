@@ -13,7 +13,9 @@ class Decrypt
 		decipher.decrypt
 		decipher.key = key
 		decipher.iv = iv
-		decipher.update(data)
+		decipher.padding = 0
+		plain = decipher.update(data)
+		plain << decipher.final
 	end	
 
 	def self.derive_pbkdf2(password, salt, iterations)

@@ -1,0 +1,22 @@
+[
+  [
+    "C08769365FB845358516CF63460BA818",
+    "webforms.WebForm",
+    "my-login",
+    "example.com",
+    1347252389,
+    "",
+    0,
+    "N"
+  ],
+  [
+    "9E7429A62EE04DFFBFDCAEFF84A82E80",
+    "passwords.Password",
+    "password-x",
+    "my-service-name",
+    1348551537,
+    "",
+    0,
+    "N"
+  ]
+]
