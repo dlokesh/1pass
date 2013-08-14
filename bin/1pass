@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require '1pass'
+
+agile_keychain = AgileKeychain.new
+agile_keychain.load(ARGV[0], ARGV[1])

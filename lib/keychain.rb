@@ -1,4 +1,7 @@
 require 'json'
+require 'encryption_key'
+require 'key'
+require 'content'
 
 class Keychain
 	attr_reader :encryption_key, :content

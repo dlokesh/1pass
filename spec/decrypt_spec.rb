@@ -20,4 +20,3 @@ describe Decrypt do
 		key['fields'].select {|f| f['name'] == "Password"}.first['value'].should == "my-password"
 	end
 end
-
