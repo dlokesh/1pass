@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = OnePass::VERSION
   spec.authors       = ["Lokeshwaran"]
   spec.email         = ["dlokesh@gmail.com"]
-  spec.description   = %q{Command line client for 1Password}
-  spec.summary       = %q{Command line client for 1Password}
+  spec.description   = "Command line client for AgileBits 1Password"
+  spec.summary       = "1pass-#{OnePass::VERSION}"
   spec.homepage      = "https://github.com/dlokesh/1pass"
   spec.license       = "MIT"
 
