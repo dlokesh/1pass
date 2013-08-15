@@ -9,7 +9,7 @@
 
 ## Command line usage
 
-Display all keychain entries (Master password not required)
+Display all keychain entries (Master password not required). By default, the keychain is looked up at $HOME/Library/Application Support/1Password/1Password.agilekeychain
 
     $ 1pass --list
     mail.google.com
