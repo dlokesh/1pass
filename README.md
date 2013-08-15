@@ -9,21 +9,29 @@
 
 ## Command line usage
 
-    $ 1pass --list
-    
 Display all keychain entries (Master password not required)
+
+    $ 1pass --list
+    mail.google.com
+    github.com
+    rubygems.org
+
+    
+Display all fields for the specified key    
 
     $ 1pass --key mail.google.com
     Enter your master password:  ********
     {"value"=>"my-email-id", "id"=>"Email", "name"=>"Email", "type"=>"E", "designation"=>"username"}
     {"value"=>"my-secret-password", "id"=>"Passwd", "name"=>"Passwd", "type"=>"P", "designation"=>"password"}
     {"value"=>"Sign in", "id"=>"signIn", "name"=>"signIn", "type"=>"I"}
-
-Display all fields for the specified key
+    
+Display value for the specified field
 
     1pass --key mail.google.com --field password
     Enter your master password:  ********
     my-secret-password
+    
+
 
     
 
