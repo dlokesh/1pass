@@ -25,6 +25,7 @@ class EncryptionKeyItem
 
 	def unlock(password)
 		@decrypted_master_key = Decrypt.decrypt_pbkdf2(password, @data, @iterations)
+		return false unless @decrypted_master_key
 		validation_key = Decrypt.decrypt_ssl(@decrypted_master_key, @validation)
 		@decrypted_master_key == validation_key
 	end	

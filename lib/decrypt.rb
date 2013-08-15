@@ -13,9 +13,12 @@ class Decrypt
 		decipher.decrypt
 		decipher.key = key
 		decipher.iv = iv
-		decipher.padding = 0
-		plain = decipher.update(data)
-		plain << decipher.final
+		begin
+			plain = decipher.update(data)
+			plain << decipher.final
+		rescue OpenSSL::Cipher::CipherError
+			nil
+		end
 	end	
 
 	def self.derive_pbkdf2(password, salt, iterations)
