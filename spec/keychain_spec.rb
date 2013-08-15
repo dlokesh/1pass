@@ -24,7 +24,13 @@ describe Keychain do
 	it "should get encrypted contents for given key name" do
 		keychain = Keychain.new (@test_path)
 		keychain.unlock("master-password").should be_true
-		keychain.get("my-login").password.should == "my-password"
+		keychain.get("my-login").find("password").should == "my-password"
 	end
+
+	it "should return if item is not found" do
+		keychain = Keychain.new (@test_path)
+		keychain.unlock("master-password").should be_true
+		keychain.get("dummy").should be_nil
+	end	
 
 end

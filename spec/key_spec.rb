@@ -17,7 +17,7 @@ describe Key do
 	    Decrypt.expects(:decrypt_ssl).with(master_key, data['encrypted']).returns(decrypted)
 
 		key = Key.new data
-		key.decrypt(encryption_key).password.should == "secret password"
+		key.decrypt(encryption_key).find("password").should == "secret password"
 	end
 
 	it "should decrypt given WebForm type encrypted data using master key" do
@@ -39,6 +39,23 @@ describe Key do
 	    Decrypt.expects(:decrypt_ssl).with(master_key, data['encrypted']).returns(decrypted)
 
 		key = Key.new data
-		key.decrypt(encryption_key).password.should == "my-password"		
+		key.decrypt(encryption_key).find("password").should == "my-password"		
 	end
+
+	it "should return if decrypted master key is not available" do
+		data = {
+			  "keyID"=> "CB7D05596E224460A6AF6B4E079A3254",
+			  "encrypted"=> "U2FsdGVkX18szXGGFR7FwBrP1w4cIk2XSlsjUlq74hAtOy7he9f/kOEpBkmCUtgu/CtkxqRF7pAfI6EDdwtH3iVj9vKHHjLyBDp5ZGlp8YiKbjXVZCzysqGryiqwx7whZBcn/Kso1vw/uWtF6YYxjnWhX8mVFC9S9BcXrJMBq8bGGMWdlmPFREJ998vhkLSE2/pIycocThDdR5wNLeQMemIarB8kRLICeoNwqUOlPpyIIa/soZqN1Nbn/aKWhBPkNgYV/x8+L4/R7blXzHINedeS1HuojFnBy7b3vRvYFM40jXTAMAsYyuRUKXolP+APTwXM29z/PzNbLXXzcojGuHcZbffdUovUZuT9cUBAB7Oefwmlq6jU07wj9KpywW/x3VWUYY7Q3aixsmmD3WDJz4pMcqSzF/rtcLBC6IqG9/s=\u0000",
+			  "typeName"=> "webforms.WebForm"
+		}
+	    
+	    encryption_key = mock("EncryptionKey")
+	    encryption_key_item = mock("EncryptionKeyItem")
+	    encryption_key.expects(:get).with(data['keyID']).returns(encryption_key_item)
+	    encryption_key_item.expects(:decrypted_master_key).returns(nil)
+	    Decrypt.expects(:decrypt_ssl).never
+
+		key = Key.new data
+		key.decrypt(encryption_key).should be_nil
+	end	
 end

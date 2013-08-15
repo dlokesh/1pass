@@ -12,36 +12,33 @@ class Key
 
 	def decrypt(encryption_key)
 		decrypted_master_key = encryption_key.get(@key_id).decrypted_master_key
+		return unless decrypted_master_key
 		decrypted_content = JSON.parse Decrypt.decrypt_ssl(decrypted_master_key, @encrypted)
 		types[@type_name].new decrypted_content
 	end
 end
 
 class WebForm
-	attr_reader :password
+	attr_reader :fields
 
 	def initialize(hash_)
-		@notes_plain, fields_hash = hash_.values_at("notesPlain", "fields")
-		@fields = fields_hash.map {|f| Field.new f}
-		@password = find("password").value
+		@notes_plain, @fields = hash_.values_at("notesPlain", "fields")
 	end
 
 	def find(name)
-		@fields.select {|f| f.name == name || f.designation == name}.first
-	end
-
-	class Field
-		attr_reader :name, :value, :designation
-		def initialize(hash_)
-			@name, @value, @designation = hash_.values_at("name", "value", "designation")
-		end
+		field = @fields.select {|f| f["name"] == name || f["designation"] == name}.first
+		field["value"]
 	end
 end
 
 class Password
-	attr_reader :password
+	attr_reader :fields
+
+	def find(name)
+		@fields[name]
+	end
 	
 	def initialize(hash_)
-		@password = hash_["password"]
+		@fields = hash_
 	end
 end

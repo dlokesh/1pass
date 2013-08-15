@@ -1,6 +1,37 @@
 #!/usr/bin/env ruby
 
 require '1pass'
+require 'optparse'
+require 'ostruct'
+require 'highline/import'
+
+options = OpenStruct.new
+
+opts = OptionParser.new do |opts|
+  opts.banner = "Usage: 1pass [options]"
+
+  opts.on("-l", "--list", "List all keychain entries") do |l|
+    options.list = true
+  end
+
+  opts.on("-k", "--key [key-name]", "Get details for given key name") do |k|
+    options.key = k
+  end  
+
+  opts.on("-f", "--field [field-name]", "Get value for given field. Key should also be specified with -k or --key") do |f|
+    options.field = f
+  end  
+end
+
+opts.parse!(ARGV)
 
 agile_keychain = AgileKeychain.new
-agile_keychain.load(ARGV[0], ARGV[1])
+
+if(options.list)
+	agile_keychain.list
+elsif(options.key)
+	master_password = ask("Enter your master password:  ") { |q| q.echo = "*" }
+	agile_keychain.load(master_password, options.key, options.field)
+else
+	puts opts
+end

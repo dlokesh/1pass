@@ -18,6 +18,7 @@ class Keychain
 
 	def get(name)
 		item = @content.find(name)
+		return unless item
 		key = Key.new load_file(item.uuid + ".1password")
 		key.decrypt(@encryption_key)
 	end
