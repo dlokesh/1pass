@@ -1,6 +1,6 @@
 # 1pass [![Gem Version](https://badge.fury.io/rb/1pass.png)](http://badge.fury.io/rb/1pass) [![Build Status](https://travis-ci.org/dlokesh/1pass.png)](https://travis-ci.org/dlokesh/1pass) [![Coverage Status](https://coveralls.io/repos/dlokesh/1pass/badge.png?branch=master)](https://coveralls.io/r/dlokesh/1pass?branch=master)
 
-[1Password] command line client
+[1Password] command line client & ruby library
 [1password]: https://agilebits.com/onepassword
 
 ## Installation
@@ -30,6 +30,14 @@ Display value for the specified field
     1pass --key mail.google.com --field password
     Enter your master password:  ********
     my-secret-password
+    
+## Library usage
+    
+    require '1pass'
+
+    agile_keychain = AgileKeychain.new(<keychain_path (optional)>)
+    agile_keychain.list
+    agile_keychain.load(<master-password>,<key>,<field (optional)>
     
 ## Contributing
 
