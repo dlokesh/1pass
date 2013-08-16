@@ -31,9 +31,11 @@ Display value for the specified field
     Enter your master password:  ********
     my-secret-password
     
-## Disclaimer
+## License & Disclaimer
 
-This project is an unofficial command-line client for [1Password] and is not developed, maintained, or endorsed by [AgileBits]. Please use at your own risk.
+Licensed under MIT. Please refer to LICENSE file for details.
+
+This project is an unofficial command-line client for [1Password] and is not supported by [AgileBits].
 [agilebits]: https://agilebits.com
 
     
