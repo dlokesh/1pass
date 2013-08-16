@@ -41,8 +41,8 @@ Display value for the specified field
 
 ## Inspiration
 
-* https://github.com/georgebrock/1pass [https://github.com/georgebrock/1pass]: https://github.com/georgebrock/1pass
-* https://github.com/oggy/1pass [https://github.com/oggy/1pass]: https://github.com/oggy/1pass
+* https://github.com/georgebrock/1pass
+* https://github.com/oggy/1pass
     
 ## License & Disclaimer
 
