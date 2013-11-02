@@ -12,15 +12,15 @@ class EncryptionKey
 	end
 
 	def get(identifier)
-		@items.select {|ek| ek.identifier == identifier}.first
+		@items.select {|ek| ek.identifier == identifier || ek.level == identifier}.first
 	end
 end
 
 class EncryptionKeyItem
-	attr_reader :identifier, :decrypted_master_key
+	attr_reader :identifier, :level, :decrypted_master_key
 
 	def initialize(hash_)
-		@identifier, @data, @validation, @iterations = hash_.values_at("identifier", "data", "validation", "iterations")
+		@identifier, @data, @validation, @iterations, @level = hash_.values_at("identifier", "data", "validation", "iterations", "level")
 	end
 
 	def unlock(password)

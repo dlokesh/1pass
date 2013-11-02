@@ -42,6 +42,26 @@ describe Key do
 		key.decrypt(encryption_key).find("password").should == "my-password"		
 	end
 
+	it "should decrypt given wallet.computer.UnixServer type encrypted data using master key" do
+		data = {
+			  "securityLevel"=> "SL5",
+			  "encrypted"=> "U2FsdGVkX1+rv05ymbg+U91chjF2wBnptmXGcG3Wl3LuBJTUOY/PCdBCcVotd+Q9F3OcdHiIErRgpjJQ9xSoD5kxTsBB13SiPJMeqMO4iHo=\u0000",
+			  "typeName"=> "wallet.computer.UnixServer"
+		}
+	    master_key = "master key"
+	    decrypted = '{"url": "0.0.0.0", "username": "root" ,"password": "secret password"}'
+	    
+	    encryption_key = mock("EncryptionKey")
+	    encryption_key_item = mock("EncryptionKeyItem")
+	    encryption_key.expects(:get).with(data['keyID']).returns(nil)
+	    encryption_key.expects(:get).with(data['securityLevel']).returns(encryption_key_item)
+	    encryption_key_item.expects(:decrypted_master_key).returns(master_key)
+	    Decrypt.expects(:decrypt_ssl).with(master_key, data['encrypted']).returns(decrypted)
+
+		key = Key.new data
+		key.decrypt(encryption_key).find("password").should == "secret password"
+	end	
+
 	it "should return if decrypted master key is not available" do
 		data = {
 			  "keyID"=> "CB7D05596E224460A6AF6B4E079A3254",

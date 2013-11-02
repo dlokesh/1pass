@@ -7,14 +7,16 @@ class Key
 	end
 
 	def initialize(hash_)
-		@key_id, @encrypted, @type_name = hash_.values_at("keyID", "encrypted", "typeName")
+		@key_id, @encrypted, @type_name, @security_level = hash_.values_at("keyID", "encrypted", "typeName", "securityLevel")
+		@type = types[@type_name] || Password
 	end
 
 	def decrypt(encryption_key)
-		decrypted_master_key = encryption_key.get(@key_id).decrypted_master_key
+		encryption_key_item = encryption_key.get(@key_id) || encryption_key.get(@security_level)
+		decrypted_master_key = encryption_key_item.decrypted_master_key
 		return unless decrypted_master_key
-		decrypted_content = JSON.parse Decrypt.decrypt_ssl(decrypted_master_key, @encrypted)
-		types[@type_name].new decrypted_content
+		decrypted_content = JSON.parse Decrypt.decrypt_ssl(decrypted_master_key, @encrypted)		
+		@type.new decrypted_content
 	end
 end
 

@@ -25,6 +25,8 @@ describe EncryptionKey do
 			}
 		encryption_key = EncryptionKey.new encryption_keys
 		encryption_key.items.size.should == 2
+		encryption_key.get("6EE8D721E87248D2BA08329003B23C56").level.should == "SL3"
+		encryption_key.get("SL5").identifier.should == "CB7D05596E224460A6AF6B4E079A3254"
 	end
 
 	describe "EncryptionKey.unlock" do		
