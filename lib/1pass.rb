@@ -4,7 +4,7 @@ require "keychain"
 class AgileKeychainException < Exception ; end
 
 class AgileKeychain
-	INVALID_PASSWORD = "Maybe you should try asking a human?"
+	INVALID_PASSWORD = "Invalid Password. Maybe you should try asking a human?"
 	INVALID_KEY = "Invalid key. Keys are case-sensitive."
 
 	def initialize(path=nil)
