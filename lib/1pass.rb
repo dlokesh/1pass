@@ -28,6 +28,11 @@ class AgileKeychain
 		puts field_name ? key.find(field_name) : key.fields
 	end
 
+	def load_all_regex(re)
+		raise AgileKeychainException, "unlock me first" if not @unlocked
+		return key.find_all(re)
+        end
+
 	private
 	def unlock(master_password)
 		return true if @unlocked

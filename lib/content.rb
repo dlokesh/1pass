@@ -8,6 +8,10 @@ class Content
 	def find(name)
 		@items.select {|i| i.name == name}.first
 	end
+
+	def find_all_regex(re)
+		@items.select {|i| /#{re}/.match(i.name)}
+	end
 end
 
 class ContentItem
