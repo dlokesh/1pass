@@ -25,7 +25,12 @@ end
 
 opts.parse!(ARGV)
 
-agile_keychain = AgileKeychain.new
+begin
+	agile_keychain = AgileKeychain.new
+rescue AgileKeychainException => e
+	puts e
+	exit(1)
+end
 
 if(options.list)
 	agile_keychain.list
