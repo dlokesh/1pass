@@ -30,7 +30,7 @@ class AgileKeychain
 
 	def load_all_regex(re)
 		raise AgileKeychainException, "unlock me first" if not @unlocked
-		return get_all.find_all(re)
+                return @keychain.get_all(re)
         end
 
 	private
