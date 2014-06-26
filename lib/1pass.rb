@@ -7,7 +7,7 @@ class AgileKeychain
 	INVALID_PASSWORD = "Invalid Password. Maybe you should try asking a human?"
 	INVALID_KEY = "Invalid key. Keys are case-sensitive."
 
-	def initialize(path=nil, master_password=nil)
+	def initialize(path:nil, master_password:nil)
 		@unlocked = false
 		path = path || "#{ENV["HOME"]}/Library/Application Support/1Password/1Password.agilekeychain"
 		@keychain = Keychain.new(path)
