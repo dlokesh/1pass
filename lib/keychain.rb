@@ -25,9 +25,9 @@ class Keychain
 
 	def get_all(re)
 		items = @content.find_all_regex(re)
-		decrypted_items = []
+		decrypted_items = {}
 		items.each do |item|
-			decrypted_items << get(item.name)
+			decrypted_items[item.name] = get(item.name)
 		end
 		return decrypted_items
         end
@@ -44,5 +44,5 @@ class Keychain
 	def load_file(file_name)
 		file = File.join(@path, "data", "default", file_name)
 		JSON.parse(IO.read(file))
-	end	
+	end
 end
