@@ -6,7 +6,13 @@ class AgileKeychain
 	INVALID_KEY = "Invalid key. Keys are case-sensitive."
 
 	def initialize(path=nil)
-		path = path || "#{ENV["HOME"]}/Library/Application Support/1Password/1Password.agilekeychain"
+		unless path
+			path = [
+			  "~/Dropbox/Library/Application Support/1Password/1Password.agilekeychain",
+			  "~/Library/Application Support/1Password/1Password.agilekeychain",
+			].find { |file| File.exists?(File.expand_path(file)) }
+		end
+		path = File.expand_path(path)
 		@keychain = Keychain.new(path)
 	end
 
