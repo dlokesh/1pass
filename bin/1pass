@@ -10,22 +10,26 @@ options = OpenStruct.new
 opts = OptionParser.new do |opts|
   opts.banner = "Usage: 1pass [options]"
 
+  opts.on("-p", "--path [path]", "Path to the keychain") do |p|
+    options.keychain_path = p
+  end
+
   opts.on("-l", "--list", "List all keychain entries") do |l|
     options.list = true
   end
 
   opts.on("-k", "--key [key-name]", "Get details for given key name") do |k|
     options.key = k
-  end  
+  end
 
   opts.on("-f", "--field [field-name]", "Get value for given field. Key should also be specified with -k or --key") do |f|
     options.field = f
-  end  
+  end
 end
 
 opts.parse!(ARGV)
 
-agile_keychain = AgileKeychain.new
+agile_keychain = AgileKeychain.new(options.keychain_path)
 
 if(options.list)
 	agile_keychain.list
