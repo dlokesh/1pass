@@ -1,9 +1,56 @@
 #!/usr/bin/env ruby
 
+lib = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
 require '1pass'
 require 'optparse'
 require 'ostruct'
 require 'highline/import'
+require 'string/similarity'
+
+def get_results(keychain, options)
+  keychain.list.select do |i|
+    include_it = false
+    i[:name].split(' ').each do |word|
+      next unless String::Similarity.levenshtein(word, options.fuzzy) > 0.5 ||
+                  word.downcase.include?(options.fuzzy.downcase)
+      include_it = true
+    end
+    include_it
+  end
+end
+
+def get_one_result(keychain, options, key)
+  puts "Getting key: #{key}"
+  options.key = key
+  options.fuzzy = nil
+  execute(keychain, options)
+end
+
+def execute(keychain, options)
+  if options.list
+    keychain.list.each { |i| puts i }
+  elsif options.fuzzy
+    results = get_results(keychain, options)
+    if results.length == 1
+      puts "Found #{results.first}, showing information..."
+      get_one_result(keychain, options, results.first)
+    else
+      puts 'Multiple results found:'
+      results.each_with_index { |item, index| puts "#{index + 1} : #{item}" }
+      item = ask('Choose: ').to_i
+      exit(1) unless (1..results.size).cover?(item)
+      get_one_result(keychain, options, results[item - 1][:name])
+    end
+    # puts String::Similarity.levenshtein("Olx Zenblast", "olx")
+  elsif options.key
+    master_password = ask('Enter your master password:  ') { |q| q.echo = '*' }
+    keychain.load(master_password, options.key, options.field)
+  else
+    puts opts
+  end
+end
 
 options = OpenStruct.new
 
@@ -22,20 +69,14 @@ opts = OptionParser.new do |opts|
     options.key = k
   end
 
+  opts.on("-u", "--fuzzy [key-name]", "Get details for given key name (fuzzy match) or list multiple found and allow choosing") do |u|
+    options.fuzzy = u
+  end
+
   opts.on("-f", "--field [field-name]", "Get value for given field. Key should also be specified with -k or --key") do |f|
     options.field = f
   end
 end
 
 opts.parse!(ARGV)
-
-agile_keychain = AgileKeychain.new(options.keychain_path)
-
-if(options.list)
-	agile_keychain.list
-elsif(options.key)
-	master_password = ask("Enter your master password:  ") { |q| q.echo = "*" }
-	agile_keychain.load(master_password, options.key, options.field)
-else
-	puts opts
-end
+execute(AgileKeychain.new(options.keychain_path), options)

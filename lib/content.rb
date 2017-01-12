@@ -11,7 +11,7 @@ class Content
 end
 
 class ContentItem
-	attr_reader :uuid, :name, :type
+	attr_reader :uuid, :name, :type, :url
 
 	def initialize(item)
 		@uuid, @type, @name, @url, @timestamp, @folder, @strength, @trashed = item
