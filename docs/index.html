@@ -8,18 +8,32 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f6f8fa;
+    }
+
+    .container {
+      max-width: 400px;
       padding: 20px;
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     h1 {
       margin-bottom: 20px;
+      text-align: center;
     }
 
     select {
       font-size: 16px;
       padding: 10px;
       margin-bottom: 10px;
-      width: 300px;
+      width: 100%;
     }
 
     button {
@@ -29,20 +43,23 @@
       color: #fff;
       border: none;
       cursor: pointer;
+      width: 100%;
     }
   </style>
 </head>
 <body>
-  <h1>Report an issue</h1>
-  <p>Select an issue template from the list below:</p>
-  <select id="template-select">
-    <option value="" selected disabled>Select a template</option>
-    <option value="END-USER-BUG-REPORT.yml">Bug Report</option>
-    <option value="feature.md">Feature Request</option>
-    <option value="question.md">Question</option>
-  </select>
-  <br>
-  <button onclick="redirectToTemplate()">Create Issue</button>
+  <div class="container">
+    <h1>Report an issue</h1>
+    <p>Select an issue template from the list below:</p>
+    <select id="template-select">
+      <option value="" selected disabled>Select a template</option>
+      <option value="END-USER-BUG-REPORT.yml">Bug Report</option>
+      <option value="feature_request.md">Feature Request</option>
+      <option value="question.md">Question</option>
+    </select>
+    <br>
+    <button onclick="redirectToTemplate()">Create Issue</button>
+  </div>
 
   <script>
     function redirectToTemplate() {
@@ -54,3 +71,4 @@
   </script>
 </body>
 </html>
+
