@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report an issue</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    select {
+      font-size: 16px;
+      padding: 10px;
+      margin-bottom: 10px;
+      width: 300px;
+    }
+
+    button {
+      font-size: 16px;
+      padding: 10px 20px;
+      background-color: #0366d6;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Report an issue</h1>
+  <p>Select an issue template from the list below:</p>
+  <select id="template-select">
+    <option value="" selected disabled>Select a template</option>
+    <option value="END-USER-BUG-REPORT.yml">Bug Report</option>
+    <option value="feature.md">Feature Request</option>
+    <option value="question.md">Question</option>
+  </select>
+  <br>
+  <button onclick="redirectToTemplate()">Create Issue</button>
+
+  <script>
+    function redirectToTemplate() {
+      var selectedTemplate = document.getElementById("template-select").value;
+      if (selectedTemplate) {
+        window.location.href = "https://github.com/dlokesh/1pass/issues/new?template=" + selectedTemplate;
+      }
+    }
+  </script>
+</body>
+</html>
