@@ -21,17 +21,28 @@ opts = OptionParser.new do |opts|
   opts.on("-f", "--field [field-name]", "Get value for given field. Key should also be specified with -k or --key") do |f|
     options.field = f
   end  
+
+  opts.on("--vault [vault-location]", "Define a non-default vault location") do |v|
+    options.vault = v
+    puts options.vault
+  end
 end
 
 opts.parse!(ARGV)
 
-agile_keychain = AgileKeychain.new
-
-if(options.list)
-	agile_keychain.list
-elsif(options.key)
-	master_password = ask("Enter your master password:  ") { |q| q.echo = "*" }
-	agile_keychain.load(master_password, options.key, options.field)
-else
-	puts opts
+begin
+	agile_keychain = AgileKeychain.new(options.vault)
+	if(options.list)
+		agile_keychain.list
+	elsif(options.key)
+		master_password = ask("Enter your master password:  ") { |q| q.echo = "*" }
+		agile_keychain.load(master_password, options.key, options.field)
+	else
+		puts opts
+	end
+#rescue AgileKeychainException => e
+#	puts e
+#	exit(1)
 end
+
+

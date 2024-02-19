@@ -14,7 +14,7 @@ class Keychain
 
 	def unlock(password)
 		@unlocked = @encryption_key.unlock(password)
-	end	
+	end
 
 	def get(name)
 		item = @content.find(name)
@@ -22,6 +22,15 @@ class Keychain
 		key = Key.new load_file(item.uuid + ".1password")
 		key.decrypt(@encryption_key)
 	end
+
+	def get_all(re)
+		items = @content.find_all_regex(re)
+		decrypted_items = {}
+		items.each do |item|
+			decrypted_items[item.name] = get(item.name)
+		end
+		return decrypted_items
+        end
 
 	private
 	def load_encryption_keys
@@ -35,5 +44,5 @@ class Keychain
 	def load_file(file_name)
 		file = File.join(@path, "data", "default", file_name)
 		JSON.parse(IO.read(file))
-	end	
+	end
 end
