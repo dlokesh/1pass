@@ -6,7 +6,9 @@ class AgileKeychain
 	INVALID_KEY = "Invalid key. Keys are case-sensitive."
 
 	def initialize(path=nil)
-		path = path || "#{ENV["HOME"]}/Library/Application Support/1Password/1Password.agilekeychain"
+		path = path ||
+		       "#{ENV['ONEPASSWORD_KEYCHAIN']}" ||
+		       "#{ENV["HOME"]}/Library/Application Support/1Password/1Password.agilekeychain"
 		@keychain = Keychain.new(path)
 	end
 
@@ -14,7 +16,7 @@ class AgileKeychain
 		@keychain.content.items.map {|i| puts i.name}
 	end
 
-	def load(master_password, key_name, field_name=nil) 
+	def load(master_password, key_name, field_name=nil)
   		inform_and_exit(INVALID_PASSWORD) unless @keychain.unlock(master_password)
   		key = @keychain.get(key_name)
   		inform_and_exit(INVALID_KEY) unless key
